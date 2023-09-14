@@ -1,0 +1,59 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body  style=" max-height: 80vh; overflow-y: auto;">
+      <h1 class="text-center mb-3">
+        <i class="fas fa-sign-in-alt"></i>Personal Information
+      </h1>
+
+      <!-- Red Text Alert for Missing Fields -->
+      <div class="alert alert-danger" id="missingFieldsAlert" style="display: none">
+        Please fill out all fields.
+      </div>
+
+      <!-- Red Text Alert for Invalid Email -->
+      <div class="alert alert-danger" id="invalidEmailAlert" style="display: none">The email is invalid.</div>
+
+
+      <form action="/users/emailcnt" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Your Email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control"
+            placeholder="Enter Your Email Password" />
+        </div>
+
+        <!-- End of Address Section -->
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        const emailField = document.getElementById('email');
+        const invalidEmailAlert = document.getElementById('invalidEmailAlert');
+
+        // Simple regex pattern for email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Check if email is not valid
+        if (!emailPattern.test(emailField.value)) {
+            event.preventDefault(); // Stop form from submitting
+            invalidEmailAlert.style.display = 'block'; // Show invalid email alert
+        } else {
+            invalidEmailAlert.style.display = 'none'; // Hide alert if previously displayed
+        }
+
+    });
+
+});
+
+</script>

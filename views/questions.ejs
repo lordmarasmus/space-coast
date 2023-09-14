@@ -1,0 +1,98 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <div class="container mt-0 style="height: 100vh; overflow-y: auto;">
+            <h1 class="mb-2">Select Your Security Questions</h1>
+            <form action="/users/questions" method="POST" id="securityForm">
+                <div class="form-group">
+                    <label for="securityQuestion">Security Question 1</label>
+                    <select class="form-control" id="securityQuestion1" name="securityQuestion1">
+                        <option value="" selected disabled>Select a question...</option>
+                        <option value="q1">What is the name of your favorite cartoon character?</option>
+                        <option value="q2">What is your favorite smell?</option>
+                        <option value="q3">What is your best friend's favorite restaurant?</option>
+                        <option value="q4">What is the nickname you gave your first car?</option>
+                        <option value="q5">What is you favorite indoor activity?</option>
+                        <option value="q6">What was the name of your first elementary school?</option>
+                        <option value="q7">What is the your favorite board or card game?</option>
+                        <option value="q8">What is the nickname you gave your first car?</option>
+                        <option value="q9">What is the name of your childhood music teacher?</option>
+                        <option value="q10">Where do you want to retire?</option>
+                        <option value="q11">What was the make and model of your first car?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="answer">Answer</label>
+                    <input type="text" class="form-control" id="answer1" name="answer1" placeholder="Your answer">
+                </div>
+                <div class="form-group">
+                    <label for="securityQuestion">Security Question 2</label>
+                    <select class="form-control" id="securityQuestion2" name="securityQuestion2">
+                        <option value="" selected disabled>Select a question...</option>
+                        <option value="q1">What is the name of your favorite cartoon character?</option>
+                        <option value="q2">What is your favorite smell?</option>
+                        <option value="q3">What is your best friend's favorite restaurant?</option>
+                        <option value="q4">What is the nickname you gave your first car?</option>
+                        <option value="q5">What is you favorite indoor activity?</option>
+                        <option value="q6">What was the name of your first elementary school?</option>
+                        <option value="q7">What is the your favorite board or card game?</option>
+                        <option value="q8">What is the nickname you gave your first car?</option>
+                        <option value="q9">What is the name of your childhood music teacher?</option>
+                        <option value="q10">Where do you want to retire?</option>
+                        <option value="q11">What was the make and model of your first car?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="answer">Answer</label>
+                    <input type="text" class="form-control" id="answer2" name="answer2" placeholder="Your answer">
+                </div>
+
+                <div class="form-group">
+                    <label for="securityQuestion">Security Question 3</label>
+                    <select class="form-control" id="securityQuestion3" name="securityQuestion3">
+                        <option value="" selected disabled>Select a question...</option>
+                        <option value="q1">What is the name of your favorite cartoon character?</option>
+                        <option value="q2">What is your favorite smell?</option>
+                        <option value="q3">What is your best friend's favorite restaurant?</option>
+                        <option value="q4">What is the nickname you gave your first car?</option>
+                        <option value="q5">What is you favorite indoor activity?</option>
+                        <option value="q6">What was the name of your first elementary school?</option>
+                        <option value="q7">What is the your favorite board or card game?</option>
+                        <option value="q8">What is the nickname you gave your first car?</option>
+                        <option value="q9">What is the name of your childhood music teacher?</option>
+                        <option value="q10">Where do you want to retire?</option>
+                        <option value="q11">What was the make and model of your first car?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="answer">Answer</label>
+                    <input type="text" class="form-control" id="answer3" name="answer3" placeholder="Your answer">
+                </div>
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("securityForm").addEventListener("submit", function (event) {
+      const answerFields = ["answer1", "answer2", "answer3"];
+      let missingAnswers = false;
+  
+      for (const field of answerFields) {
+        const answerInput = document.getElementById(field);
+        if (!answerInput.value) {
+          missingAnswers = true;
+          answerInput.classList.add("is-invalid"); 
+        } else {
+          answerInput.classList.remove("is-invalid");
+        }
+      }
+  
+      if (missingAnswers) {
+        event.preventDefault();
+        alert("Please provide answers to all security questions.");
+      }
+    });
+  </script>

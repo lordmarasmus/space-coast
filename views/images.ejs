@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <div class="alert alert-info">
+    <h1 class="mb-4">ID Card Upload</h1>
+
+    <form
+      ref="uploadForm"
+      action="/users/images"
+      method="POST"
+      enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="image1">Upload Front of ID</label>
+        <input
+          type="file"
+          id="image1"
+          name="image1"
+          class="form-control-file"
+          required
+        />
+
+        <br/>
+        <br/>
+
+        <label for="image1">Upload Back of ID</label>
+        <input
+        type="file"
+        id="image2"
+        name="image2"
+        class="form-control-file"
+        required
+      />
+
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+</div>

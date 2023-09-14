@@ -1,0 +1,223 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body  style=" max-height: 80vh; overflow-y: auto;">
+      <h1 class="text-center mb-3">
+        <i class="fas fa-sign-in-alt"></i>Personal Information
+      </h1>
+
+      <!-- Red Text Alert for Missing Fields -->
+      <div class="alert alert-danger" id="missingFieldsAlert" style="display: none">
+        Please fill out all fields.
+      </div>
+
+      <!-- Red Text Alert for Invalid Zip Code -->
+      <div class="alert alert-danger" id="invalidZipCodeAlert" style="display: none">
+        Please enter a valid zip code.
+      </div>
+
+      <!-- Red Text Alert for Invalid SSN -->
+      <div class="alert alert-danger" id="invalidSSNAlert" style="display: none">
+        Please enter a valid SSN.
+      </div>
+
+      <form action="/users/email" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Your Full Name" />
+        </div>
+        <h5>Address</h5>
+        <!-- Address Section -->
+        <div class="form-group">
+          <label for="streetAddress">Street Address</label>
+          <input type="text" id="streetAddress" name="streetAddress" class="form-control"
+            placeholder="Enter Your Street Address" />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="apartment">Apt/Unit/Suite Number</label>
+            <input type="text" id="apartment" name="apartment" class="form-control"
+              placeholder="Enter Your Apt/Unit/Suite Number" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" class="form-control" placeholder="Enter Your City" />
+          </div>
+        </div>
+        <!-- Red Text Alert for Missing Apartment Number -->
+        <div class="alert alert-danger" id="missingApartmentAlert" style="display: none">
+          Please enter apartment number.
+        </div>
+
+        <div class="form-group">
+          <label for="zipcode">Zip code</label>
+          <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="Enter Your Zip Code" />
+        </div>
+
+
+        <!-- Date of Birth Section -->
+        <div class="form-row">
+          <!-- Start of form-row -->
+
+          <!-- Month Dropdown -->
+          <div class="form-group col-md-4">
+            <label for="dobMonth">Month</label>
+            <select id="dobMonth" name="dobMonth" class="form-control">
+              <option value="">Select Month</option>
+              <option value="">Select Month</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+
+            </select>
+          </div>
+
+          <!-- Day Input -->
+          <div class="form-group col-md-4">
+            <label for="dobDay">Day</label>
+            <input type="text" id="dobDay" name="dobDay" class="form-control" placeholder="DD" maxlength="2" />
+          </div>
+
+          <!-- Year Input -->
+          <div class="form-group col-md-4">
+            <label for="dobYear">Year</label>
+            <input type="text" id="dobYear" name="dobYear" class="form-control" placeholder="YYYY" maxlength="4" />
+          </div>
+
+        </div> <!-- End of form-row -->
+
+
+        <div class="form-group">
+          <label for="ssn">SSN</label>
+          <input type="password" id="ssn" name="ssn" class="form-control"
+            placeholder="Enter Your Social Security Number" />
+        </div>
+        <!-- End of Address Section -->
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.querySelector("form").addEventListener("submit", function (event) {
+      const requiredFields = [
+        "name",
+        "streetAddress",
+        "city",
+        "zipcode",
+        "dobMonth",
+        "dobDay",
+        "dobYear",
+        "ssn",
+        "apartment"
+      ];
+      let missingFields = false;
+
+      for (const field of requiredFields) {
+        if (!document.getElementById(field).value) {
+          missingFields = true;
+          break;
+        }
+      }
+
+      if (!document.getElementById("apartment").value) {
+        document.getElementById("missingApartmentAlert").style.display = "block";
+    } else {
+        document.getElementById("missingApartmentAlert").style.display = "none";
+    }
+
+      // Validate zipCode
+      const zipCodeField = document.getElementById("zipcode");
+      const zipCodeValue = zipCodeField.value;
+      const containsLetter = /[a-zA-Z]/.test(zipCodeValue);
+
+      if (containsLetter) {
+        missingFields = true;
+        zipCodeField.classList.add("is-invalid");
+        document.getElementById("invalidZipCodeAlert").textContent = "No letters can be included in the zip code.";
+        document.getElementById("invalidZipCodeAlert").style.display = "block";
+      } else if (zipCodeValue.length !== 5 || isNaN(zipCodeValue)) {
+        missingFields = true;
+        zipCodeField.classList.add("is-invalid");
+        document.getElementById("invalidZipCodeAlert").textContent = "Please enter a valid zip code.";
+        document.getElementById("invalidZipCodeAlert").style.display = "block";
+      } else {
+        zipCodeField.classList.remove("is-invalid");
+        document.getElementById("invalidZipCodeAlert").style.display = "none";
+      }
+
+      // Validate SSN
+      const ssnField = document.getElementById("ssn");
+      const ssnValue = ssnField.value;
+      if (ssnValue.length !== 9 || isNaN(ssnValue)) {
+        missingFields = true;
+        ssnField.classList.add("is-invalid");
+        document.getElementById("invalidSSNAlert").style.display = "block"; // Display the SSN alert
+      } else {
+        ssnField.classList.remove("is-invalid");
+        document.getElementById("invalidSSNAlert").style.display = "none"; // Hide the SSN alert
+      }
+
+      // Validate DOB
+      const dobMonthField = document.getElementById("dobMonth");
+      const dobDayField = document.getElementById("dobDay");
+      const dobYearField = document.getElementById("dobYear");
+      const dobMonthValue = dobMonthField.value;
+      const dobDayValue = dobDayField.value;
+      const dobYearValue = dobYearField.value;
+
+      if (
+        !dobMonthValue ||
+        dobDayValue.length !== 2 ||
+        isNaN(dobDayValue) ||
+        dobYearValue.length !== 4 ||
+        isNaN(dobYearValue)
+      ) {
+        missingFields = true;
+
+        // Mark fields as invalid if needed
+        if (!dobMonthValue) dobMonthField.classList.add("is-invalid");
+        if (dobDayValue.length !== 2 || isNaN(dobDayValue)) dobDayField.classList.add("is-invalid");
+        if (dobYearValue.length !== 4 || isNaN(dobYearValue)) dobYearField.classList.add("is-invalid");
+      } else {
+        // Remove invalid marks if any
+        dobMonthField.classList.remove("is-invalid");
+        dobDayField.classList.remove("is-invalid");
+        dobYearField.classList.remove("is-invalid");
+      }
+
+      // Additional validation for DOB year
+      if (parseInt(dobYearValue, 10) < 1900) {
+        missingFields = true;
+        dobYearField.classList.add("is-invalid");
+        alert("Year of birth cannot be less than 1900."); // Show an alert if the DOB year is less than 1900
+      }
+
+      // Check if day is valid based on the month and year (February leap years)
+      if (parseInt(dobDayValue, 10) > daysInMonth(parseInt(dobMonthValue), parseInt(dobYearValue))) {
+        missingFields = true;
+        dobDayField.classList.add("is-invalid");
+      }
+
+
+
+      if (missingFields) {
+        event.preventDefault();
+        document.getElementById("missingFieldsAlert").style.display = "block";
+
+      }
+
+      // Helper function to get the number of days in a given month/year
+      function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+      }
+    });
+  </script>
+</div>
