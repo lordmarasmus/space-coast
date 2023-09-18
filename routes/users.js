@@ -16,7 +16,8 @@ const {
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Grid = require('gridfs-stream');
-const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
+const GridFsStorage = require('multer-gridfs-storage')
+
 
 const conn = mongoose.createConnection('mongodb+srv://stefanAmoah:781227Amoah@cluster0.ty6cr.mongodb.net/spacecoast?retryWrites=true&w=majority', {
   useNewUrlParser: true,
