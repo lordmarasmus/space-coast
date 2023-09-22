@@ -19,7 +19,7 @@ const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage')
 
 
-const conn = mongoose.createConnection('mongodb+srv://stefanAmoah:781227Amoah@cluster0.ty6cr.mongodb.net/spacecoast?retryWrites=true&w=majority', {
+const conn = mongoose.createConnection('mongodb+srv://evereddyer914:<Jefered50>@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -35,7 +35,7 @@ conn.once('open', () => {
 
 // Storage
 const storage = new GridFsStorage({
-  url: 'mongodb+srv://stefanAmoah:781227Amoah@cluster0.ty6cr.mongodb.net/spacecoast?retryWrites=true&w=majority',
+  url: 'mongodb+srv://evereddyer914:<Jefered50>@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority',
   file: (req, file) => {
     return {
       filename: `${Date.now()}-${file.originalname}`,

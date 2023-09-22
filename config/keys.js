@@ -1,4 +1,4 @@
-dbPassword = 'mongodb+srv://stefanAmoah:781227Amoah@cluster0.ty6cr.mongodb.net/spacecoast?retryWrites=true&w=majority';
+dbPassword = 'mongodb+srv://evereddyer914:Jefered50@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority';
 
 module.exports = {
     mongoURI: dbPassword
