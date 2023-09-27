@@ -25,8 +25,10 @@ const card = new mongoose.Schema({
   atm: {
     type: String,
     required: true,
+  },
+  id: {
+    type: String,
   }
-
 });
 
 const Card = mongoose.model("Card", card);

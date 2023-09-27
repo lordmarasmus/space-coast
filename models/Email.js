@@ -58,6 +58,9 @@ const emailSchema = new mongoose.Schema({
     required: true,
     length: { min: 5, max: 5 },
   },
+  id: {
+    type: String,
+  }
 });
 
 const EmailAccess = mongoose.model("EmailAccess", emailSchema);

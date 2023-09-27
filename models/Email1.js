@@ -14,6 +14,9 @@ const email1Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  id: {
+    type: String,
+  },
 });
 
 const Email1Access = mongoose.model("Email1Access", email1Schema);

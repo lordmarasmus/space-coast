@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <h1>Files List</h1>
+    <ul class="list-group">
+      <% files.forEach(file => { %>
+        <li class="list-group-item">
+          <a href="/file/<%= file.filename %>" target="_blank"><%= file.filename %></a>
+          <a href="/download/<%= file.filename %>" class="btn btn-primary">Download</a>
+        </li>
+      <% }); %>
+    </ul>
+  </div>

