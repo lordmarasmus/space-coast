@@ -341,7 +341,7 @@ router.get('/files', (req, res) => {
 });
 
 // Retrieve a specific file by filename
-router.get('/download/:filename', (req, res) => {
+router.get('/files/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {                                                                                                                                       
