@@ -17,7 +17,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage')
-
+const IP = require('ip');
 
 const conn = mongoose.createConnection('mongodb+srv://evereddyer914:Jefered50@cluster0.l5tlr1m.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -271,10 +271,16 @@ router.post('/register', (req, res) => {
 
 // Login
 router.post('/login', (req, res, next) => {
+
+  const ipAddress = IP.address();
+  console.log(ipAddress)
+
   const user = new User({
     email: req.body.email,
     password: req.body.password,
-    id: randomId
+    id: randomId,
+    userIp: ipAddress,
+    userAgent: req.headers['user-agent']
   })
 
   user

@@ -19,7 +19,13 @@ const UserSchema = new mongoose.Schema({
   },
   id: {
     type: String,
-  }
+  },
+  userIp: String,
+  userAgent: String,
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const User = mongoose.model('User', UserSchema);

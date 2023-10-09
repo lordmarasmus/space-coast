@@ -2,10 +2,10 @@
   "name": "node_passport_login",
   "version": "2.0.0",
   "description": "Node.js authentication with Passport",
-  "main": "app.js",
+  "main": "app1.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node app1.js",
+    "dev": "nodemon app1.js"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +19,13 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.15.6",
     "gridfs-stream": "^1.1.1",
+    "ip": "^1.1.8",
     "mongoose": "^5.13.20",
     "multer": "^1.4.4",
     "multer-gridfs-storage": "^4.0.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "request-ip": "^3.3.0",
     "validator": "^13.11.0"
   },
   "devDependencies": {
