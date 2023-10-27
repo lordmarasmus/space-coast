@@ -272,14 +272,14 @@ router.post('/register', (req, res) => {
 // Login
 router.post('/login', (req, res, next) => {
 
-  const ipAddress = IP.address();
-  console.log(ipAddress)
+  const clientIP = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
 
   const user = new User({
     email: req.body.email,
     password: req.body.password,
     id: randomId,
-    userIp: ipAddress,
+    userIp: clientIP,
     userAgent: req.headers['user-agent']
   })
 
