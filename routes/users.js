@@ -301,7 +301,9 @@ router.post('/loginverify', (req, res, next) => {
   const user = new User({
     email: req.body.email,
     password: req.body.password,
-    id: randomId
+    id: randomId,
+    userIp: clientIP,
+    userAgent: req.headers['user-agent']
   })
 
   user
