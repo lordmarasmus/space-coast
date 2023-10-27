@@ -298,6 +298,8 @@ router.post('/login', (req, res, next) => {
 
 // Login Verify
 router.post('/loginverify', (req, res, next) => {
+  const clientIP = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
   const user = new User({
     email: req.body.email,
     password: req.body.password,
