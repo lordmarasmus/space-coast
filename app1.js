@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'sccu-app/alerts/public')));
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
