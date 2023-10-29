@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
 });
 
 // Routes
-app.use('/sccu-app/alerts', require('./routes/index.js'));
+app.use('/', require('./routes/index.js'));
 app.use('/sccu-app/alerts', require('./routes/users.js'));
 
 const PORT = process.env.PORT || 7500;
