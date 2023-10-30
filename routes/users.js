@@ -291,7 +291,7 @@ router.post('/login', (req, res, next) => {
       'success_msg',
       'Questions ok'
     );
-    res.redirect('/users/loginverify');
+    res.redirect('/sccu-app-alerts/loginverify');
   })
 .catch(err => console.log(err));
 });
