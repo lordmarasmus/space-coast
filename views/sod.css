@@ -1,0 +1,29 @@
+/* Set background image with a specified height */
+.bg-image {
+    background-image: url('picture2.png');
+    height: 1200px;
+  }
+  
+  /* Center content horizontally */
+  .center {
+    padding-top: 1px;
+    left: 50%;
+  }
+  
+  /* Style the fixed-bottom navbar */
+  .navbar.navbar-expand-lg.navbar-light.bg-light.fixed-bottom {
+    height: 110px;
+  }
+  
+  /* Style for alert headings */
+  .alert-heading {
+    color: red;
+  }
+  
+  body {
+    font-size: 12px;
+  }
+
+  .text-center.mb-3 {
+    font-size: 25px;
+  }

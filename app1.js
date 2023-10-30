@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
@@ -69,7 +69,6 @@ app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));
 
 app.use('/users', express.static('public'));
-
 
 const PORT = process.env.PORT || 7500;
 
